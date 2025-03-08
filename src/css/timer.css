@@ -18,7 +18,7 @@
 }
 
 
-input {
+input[type="text"] {
     display: block;
     font-size: 16px;
     color: #bd34fe;
@@ -84,7 +84,15 @@ button:disabled:hover {
 }
 
 .value {
-font-size: 60px;
+    font-weight: 400;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 48px;
+    letter-spacing: 4%;
+    color:#d4cec7f3;
+}
+
+.value.active {
 font-weight: 600;
 background-image: linear-gradient(120deg, #bd34fe 30%, #41d1ff);
     -webkit-text-fill-color: transparent;
@@ -94,9 +102,18 @@ background-image: linear-gradient(120deg, #bd34fe 30%, #41d1ff);
 }
 
 .label {
-font-size: 26px;
-    font-weight: 600;
-    background-image: linear-gradient(120deg, #bd34fe 30%, #41d1ff);
+font-weight: 400;
+font-size: 16px;
+font-weight: 400;
+line-height: 24px;
+letter-spacing: 0%;
+text-transform: uppercase;
+color: #5e5b5b;
+}
+
+.label.active {
+font-weight: 600;
+background-image: linear-gradient(120deg, #bd34fe 30%, #41d1ff);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     background-clip: text;

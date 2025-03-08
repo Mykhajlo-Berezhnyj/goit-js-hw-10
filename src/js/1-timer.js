@@ -7,6 +7,7 @@ import "izitoast/dist/css/iziToast.min.css";
 
 let userSelectedDate;
 let newInterval;
+const timer = document.querySelector('.timer');
 const startButton = document.querySelector("button[data-start]");
 const inputData = document.getElementById('datetime-picker');
 const day = document.querySelector('span[data-days]');
@@ -49,19 +50,21 @@ document.addEventListener("DOMContentLoaded", function () {
 startButton.addEventListener('click', dataTimer);
 
 function dataTimer() {
-    console.log("🚀 ~ dataTimer ~ userSelectedDate:", userSelectedDate)
     if (!userSelectedDate) {
         return;
     }
     startButton.setAttribute('disabled', 'true');
     inputData.disabled = true;
     
-    const interval = setInterval(() => {    
-    const currentDate = new Date();
-    newInterval = userSelectedDate - currentDate;
-    if (newInterval <= 0) {
-        inputData.disabled = false;
-        clearInterval(interval);
+    const interval = setInterval(() => {
+        const currentDate = new Date();
+        newInterval = userSelectedDate - currentDate;
+        if (newInterval <= 0) {
+            inputData.disabled = false;
+            clearInterval(interval);
+            timer.querySelectorAll('.value, .label').forEach(element => {
+                element.classList.remove('active');
+        });
         defaultDate: new Date()
         iziToast.show({
               title: 'Warning!',
@@ -110,6 +113,9 @@ function addLeadingZero(value) {
 }
 
 function displayData(value) {
+    timer.querySelectorAll('.value, .label').forEach(element => {
+        element.classList.add('active');
+    });
        const interval = convertMs(newInterval);
         day.textContent = addLeadingZero(interval.days);
         hour.textContent = addLeadingZero(interval.hours);
