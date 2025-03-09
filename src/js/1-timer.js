@@ -25,7 +25,9 @@ setTimeout(() => {
     messageColor: '#FFFFFF',
     position: 'bottomRight',
     backgroundColor: '#0099FF',
-    iconUrl: './img/hello.svg',
+    class: 'hello-Toast',
+    icon: '<img src="img/hello.svg" style="width: 40px; height: 40px;">',
+    // iconUrl: './img/hello.svg',
   });
 }, 1000);
 
@@ -45,8 +47,8 @@ const options = {
         messageColor: '#FFFFFF',
         position: 'topRight',
         backgroundColor: '#EF4040',
-        class: 'custom-Toast',
-        icon: '<img src="img/errors.svg" style="width: 40px; height: 40px;">',
+        class: 'error-Toast',
+        icon: '<img src="img/error.svg" style="width: 40px; height: 40px;">',
         position: 'topRight',
         // iconUrl: 'img/errors.png',
       });
@@ -66,7 +68,9 @@ const options = {
         messageColor: '#0000FF',
         position: 'center',
         backgroundColor: '#FFA000',
-        iconUrl: '../img/caution.svg',
+        class: 'caution-Toast',
+        icon: '<img src="img/caution.svg" style="width: 40px; height: 40px;">',
+        // iconUrl: '../img/caution.svg',
         buttons: [
           [
             '<button class="btn">OK</button>',
