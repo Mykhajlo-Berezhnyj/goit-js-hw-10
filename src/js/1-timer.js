@@ -25,7 +25,7 @@ setTimeout(() => {
     messageColor: '#FFFFFF',
     position: 'bottomRight',
     backgroundColor: '#0099FF',
-    iconUrl: 'img/hello.svg',
+    iconUrl: '/img/hello.svg',
   });
 }, 1000);
 
@@ -45,7 +45,7 @@ const options = {
         messageColor: '#FFFFFF',
         position: 'topRight',
         backgroundColor: '#EF4040',
-        iconUrl: 'img/error.svg',
+        iconUrl: '/img/error.svg',
       });
     }
   },
@@ -63,7 +63,7 @@ const options = {
         messageColor: '#0000FF',
         position: 'center',
         backgroundColor: '#FFA000',
-        iconUrl: 'img/caution.svg',
+        iconUrl: '/img/caution.svg',
         buttons: [
           [
             '<button class="btn">OK</button>',
