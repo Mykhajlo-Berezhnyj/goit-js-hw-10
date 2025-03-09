@@ -104,20 +104,27 @@ function dataTimer() {
   }
   inputData.disabled = true;
   const currentDate = new Date();
-  if (userSelectedDate > currentDate) {
+  let differenceData = userSelectedDate - currentDate;
+  if (differenceData > 0) {
     startButton.setAttribute('disabled', 'true');
+    console.log('🚀 ~ dataTimer ~ differenceData:', differenceData);
   } else {
     startButton.textContent = 'Stop';
   }
   isRunning = true;
+
   interval = setInterval(() => {
     const currentDate = new Date();
-    newInterval = Math.abs(userSelectedDate - currentDate);
-    if (newInterval <= 0) {
-      inputData.disabled = false;
+    console.log('🚀 ~ interval=setInterval ~ differenceData:', differenceData);
+    newInterval = userSelectedDate - currentDate;
+    if (newInterval <= 0 && differenceData > 0) {
+      console.log('🚀 ~ interval=setInterval ~ newInterval:', newInterval);
       clearInterval(interval);
+      differenceData = 0;
+      inputData.disabled = false;
       timer.querySelectorAll('.value, .label').forEach(element => {
         element.classList.remove('active');
+        isRunning = false;
       });
       defaultDate: new Date();
       iziToast.show({
@@ -129,9 +136,11 @@ function dataTimer() {
         backgroundColor: '#d4cec7f3',
       });
       return;
-    } else {
-      displayData();
     }
+    if (differenceData < 0) {
+      newInterval = -newInterval;
+    }
+    displayData();
   }, 1000);
 }
 
@@ -166,11 +175,11 @@ function displayData(value) {
   timer.querySelectorAll('.value, .label').forEach(element => {
     element.classList.add('active');
   });
-  const interval = convertMs(newInterval);
-  day.textContent = addLeadingZero(interval.days);
-  hour.textContent = addLeadingZero(interval.hours);
-  minute.textContent = addLeadingZero(interval.minutes);
-  second.textContent = addLeadingZero(interval.seconds);
+  const timeInterval = convertMs(newInterval);
+  day.textContent = addLeadingZero(timeInterval.days);
+  hour.textContent = addLeadingZero(timeInterval.hours);
+  minute.textContent = addLeadingZero(timeInterval.minutes);
+  second.textContent = addLeadingZero(timeInterval.seconds);
 }
 
 function resetTimer() {
