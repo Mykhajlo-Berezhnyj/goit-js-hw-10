@@ -156,3 +156,13 @@ main {
   transform: translate(-50%, -50%) scale(1);
   opacity: 1;
 }
+
+.custom-Toast .iziToast-icon {
+  background-image: url('../img/error.svg');
+  background-size: contain;
+}
+
+.iziToast-icon img {
+  width: 20px;
+  height: 20px;
+}

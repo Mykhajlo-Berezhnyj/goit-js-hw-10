@@ -45,7 +45,10 @@ const options = {
         messageColor: '#FFFFFF',
         position: 'topRight',
         backgroundColor: '#EF4040',
-        iconUrl: 'img/errors.png',
+        class: 'custom-Toast',
+        icon: '<img src="img/errors.svg" style="width: 40px; height: 40px;">',
+        position: 'topRight',
+        // iconUrl: 'img/errors.png',
       });
     }
   },
