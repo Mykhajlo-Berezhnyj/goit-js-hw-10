@@ -165,17 +165,7 @@ main {
   width: 20px;
   height: 20px;
 }
-.caution-Toast .iziToast-icon {
-  background-image: url('../img/caution.svg');
-  background-size: contain;
-}
 
-.hello-Toast .iziToast-icon {
-  background-image: url('../img/hello.svg');
-  background-size: contain;
-}
-
-.ok-Toast .iziToast-icon {
-  background-image: url('../img/ok.svg');
-  background-size: contain;
+.iziToast {
+  max-width: 400px;
 }

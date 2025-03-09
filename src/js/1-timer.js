@@ -4,6 +4,9 @@ import 'flatpickr/dist/themes/material_blue.css';
 
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import iconError from '../img/error.svg';
+import iconCaution from '../img/caution.svg';
+import iconHello from '../img/hello.svg';
 
 let userSelectedDate;
 let interval;
@@ -25,9 +28,7 @@ setTimeout(() => {
     messageColor: '#FFFFFF',
     position: 'bottomRight',
     backgroundColor: '#0099FF',
-    class: 'hello-Toast',
-    icon: '<img src="img/hello.svg" style="width: 40px; height: 40px;">',
-    // iconUrl: './img/hello.svg',
+    iconUrl: iconHello,
   });
 }, 1000);
 
@@ -40,6 +41,9 @@ const options = {
     userSelectedDate = selectedDates[0];
     if (userSelectedDate && userSelectedDate <= new Date()) {
       startButton.setAttribute('disabled', 'true');
+      console.log(
+        'на мою думку onChange тут є кращим рішенням, він відразу при виборі дати дає повідомлення про помилку, швидша взаємодія з користувачем він зразу бачить що дата вибрана не вірно, не закриваючи календар '
+      );
       iziToast.show({
         title: 'Error!',
         message: 'Please choose a date in the future',
@@ -47,19 +51,20 @@ const options = {
         messageColor: '#FFFFFF',
         position: 'topRight',
         backgroundColor: '#EF4040',
-        class: 'error-Toast',
-        icon: '<img src="img/error.svg" style="width: 40px; height: 40px;">',
         position: 'topRight',
-        // iconUrl: 'img/errors.png',
+        iconUrl: iconError,
       });
     }
   },
   onClose(selectedDates) {
     console.log(selectedDates[0]);
     userSelectedDate = selectedDates[0];
-    console.log('🚀 ~ onClose ~ userSelectedDate:', userSelectedDate);
+    // console.log('🚀 ~ onClose ~ userSelectedDate:', userSelectedDate);
     if (userSelectedDate && userSelectedDate <= new Date()) {
       startButton.setAttribute('disabled', 'true');
+      console.log(
+        'Тут вже, якщо все ж таки якийсь настирний користувач вибере все ж таки стару дату, додав повідомлення з кнопкою. при натисканні на яку перемикаємося в режим відліку періоду часу, скільки пройшло з памятної для нього дати :) '
+      );
       iziToast.show({
         title: 'Warning!',
         message:
@@ -68,9 +73,8 @@ const options = {
         messageColor: '#0000FF',
         position: 'center',
         backgroundColor: '#FFA000',
-        class: 'caution-Toast',
-        icon: '<img src="img/caution.svg" style="width: 40px; height: 40px;">',
-        // iconUrl: '../img/caution.svg',
+        layout: 2,
+        iconUrl: iconCaution,
         buttons: [
           [
             '<button class="btn">OK</button>',
@@ -107,7 +111,6 @@ function dataTimer() {
   let differenceData = userSelectedDate - currentDate;
   if (differenceData > 0) {
     startButton.setAttribute('disabled', 'true');
-    console.log('🚀 ~ dataTimer ~ differenceData:', differenceData);
   } else {
     startButton.textContent = 'Stop';
   }
@@ -115,10 +118,8 @@ function dataTimer() {
 
   interval = setInterval(() => {
     const currentDate = new Date();
-    console.log('🚀 ~ interval=setInterval ~ differenceData:', differenceData);
     newInterval = userSelectedDate - currentDate;
     if (newInterval <= 0 && differenceData > 0) {
-      console.log('🚀 ~ interval=setInterval ~ newInterval:', newInterval);
       clearInterval(interval);
       differenceData = 0;
       inputData.disabled = false;
@@ -163,9 +164,9 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+//console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
+//console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
+//console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
 
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');

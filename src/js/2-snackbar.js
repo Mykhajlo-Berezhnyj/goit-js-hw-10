@@ -1,5 +1,9 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import iconError from '../img/error.svg';
+import iconCaution from '../img/caution.svg';
+import iconHello from '../img/hello.svg';
+import iconOk from '../img/ok.svg';
 
 const params = {
   form: document.querySelector('.form'),
@@ -16,9 +20,7 @@ setTimeout(() => {
     messageColor: '#FFFFFF',
     position: 'bottomRight',
     backgroundColor: '#0099FF',
-    class: 'hello-Toast',
-    icon: '<img src="img/hello.svg" style="width: 40px; height: 40px;">',
-    // iconUrl: 'img/hello.svg',
+    iconUrl: iconHello,
   });
 }, 1000);
 
@@ -28,7 +30,6 @@ function promiceCreate(event) {
   event.preventDefault();
   const checkRadio = document.querySelector('input[name="state"]:checked');
   const delay = Number(params.delayInput.value);
-  console.log('🚀 ~ promiceCreate ~ delay:', delay);
   if (!checkRadio || delay < 0) {
     iziToast.show({
       title: 'Caution',
@@ -37,23 +38,19 @@ function promiceCreate(event) {
       messageColor: '#FFFFFF',
       position: 'topRight',
       backgroundColor: '#FFA000',
-      class: 'caution-Toast',
-      icon: '<img src="img/caution.svg" style="width: 40px; height: 40px;">',
-      // iconUrl: 'img/caution.svg',
+      iconUrl: iconCaution,
     });
     return;
   }
 
   const state = checkRadio.value;
   const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (state === 'fulfilled') {
-        resolve(`✅ Fulfilled promise in ${delay}ms`);
-      } else {
-        reject(`❌ Rejected promise in ${delay}ms`);
-      }
-    }, delay);
+    setTimeout(
+      () => (state === 'fulfilled' ? resolve(delay) : reject(delay)),
+      delay
+    );
   });
+
   params.delayInput.value = '';
   params.radioButtons.forEach(radio => {
     radio.checked = false;
@@ -63,27 +60,23 @@ function promiceCreate(event) {
     .then(message => {
       iziToast.show({
         title: 'OK',
-        message: message,
+        message: `✅ Fulfilled promise in ${delay}ms`,
         titleColor: '#FFFFFF',
         messageColor: '#FFFFFF',
         position: 'topRight',
         backgroundColor: ' #326101',
-        class: 'ok-Toast',
-        icon: '<img src="img/ok.svg" style="width: 40px; height: 40px;">',
-        //  iconUrl: 'img/ok.svg',
+        iconUrl: iconOk,
       });
     })
     .catch(error => {
       iziToast.show({
         title: 'Error',
-        message: error,
+        message: `❌ Rejected promise in ${delay}ms`,
         titleColor: '#FFFFFF',
         messageColor: '#FFFFFF',
         position: 'topRight',
         backgroundColor: '#EF4040',
-        class: 'error-Toast',
-        icon: '<img src="img/error.svg" style="width: 40px; height: 40px;">',
-        //  iconUrl: 'img/error.svg',
+        iconUrl: iconError,
       });
     });
 }
