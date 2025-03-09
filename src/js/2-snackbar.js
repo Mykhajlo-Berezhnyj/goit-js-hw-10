@@ -16,7 +16,7 @@ setTimeout(() => {
     messageColor: '#FFFFFF',
     position: 'bottomRight',
     backgroundColor: '#0099FF',
-    iconUrl: '/img/hello.svg',
+    iconUrl: './img/hello.svg',
   });
 }, 1000);
 
@@ -35,7 +35,7 @@ function promiceCreate(event) {
       messageColor: '#FFFFFF',
       position: 'topRight',
       backgroundColor: '#FFA000',
-      iconUrl: '/img/caution.svg',
+      iconUrl: './img/caution.svg',
     });
     return;
   }
@@ -64,7 +64,7 @@ function promiceCreate(event) {
         messageColor: '#FFFFFF',
         position: 'topRight',
         backgroundColor: ' #326101',
-        iconUrl: '/img/ok.svg',
+        iconUrl: './img/ok.svg',
       });
     })
     .catch(error => {
@@ -75,7 +75,7 @@ function promiceCreate(event) {
         messageColor: '#FFFFFF',
         position: 'topRight',
         backgroundColor: '#EF4040',
-        iconUrl: '/img/error.svg',
+        iconUrl: './img/error.svg',
       });
     });
 }
