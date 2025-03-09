@@ -45,7 +45,7 @@ const options = {
         messageColor: '#FFFFFF',
         position: 'topRight',
         backgroundColor: '#EF4040',
-        iconUrl: 'img/error.svg',
+        iconUrl: 'img/errors.png',
       });
     }
   },
