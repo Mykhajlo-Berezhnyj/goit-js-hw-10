@@ -5,13 +5,11 @@ import 'flatpickr/dist/themes/material_blue.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import iconError from '../img/error.svg';
-import iconCaution from '../img/caution.svg';
 import iconHello from '../img/hello.svg';
 
 let userSelectedDate;
 let interval;
 let newInterval;
-let isRunning = false;
 const timer = document.querySelector('.timer');
 const startButton = document.querySelector('button[data-start]');
 const inputData = document.getElementById('datetime-picker');
@@ -37,13 +35,11 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onChange(selectedDates) {
+  onClose(selectedDates) {
     userSelectedDate = selectedDates[0];
     if (userSelectedDate && userSelectedDate <= new Date()) {
       startButton.setAttribute('disabled', 'true');
-      console.log(
-        'на мою думку onChange тут є кращим рішенням, він відразу при виборі дати дає повідомлення про помилку, швидша взаємодія з користувачем він зразу бачить що дата вибрана не вірно, не закриваючи календар '
-      );
+
       iziToast.show({
         title: 'Error!',
         message: 'Please choose a date in the future',
@@ -53,37 +49,6 @@ const options = {
         backgroundColor: '#EF4040',
         position: 'topRight',
         iconUrl: iconError,
-      });
-    }
-  },
-  onClose(selectedDates) {
-    console.log(selectedDates[0]);
-    userSelectedDate = selectedDates[0];
-    // console.log('🚀 ~ onClose ~ userSelectedDate:', userSelectedDate);
-    if (userSelectedDate && userSelectedDate <= new Date()) {
-      startButton.setAttribute('disabled', 'true');
-      console.log(
-        'Тут вже, якщо все ж таки якийсь настирний користувач вибере все ж таки стару дату, додав повідомлення з кнопкою. при натисканні на яку перемикаємося в режим відліку періоду часу, скільки пройшло з памятної для нього дати :) '
-      );
-      iziToast.show({
-        title: 'Warning!',
-        message:
-          'Ви вибрали дату в минулому, бажаєте дізнатися скільки часу минуло від цієї дати?',
-        titleColor: '#0000FF',
-        messageColor: '#0000FF',
-        position: 'center',
-        backgroundColor: '#FFA000',
-        layout: 2,
-        iconUrl: iconCaution,
-        buttons: [
-          [
-            '<button class="btn">OK</button>',
-            function (instance, toast) {
-              startButton.removeAttribute('disabled');
-              instance.hide({ transitionOut: 'fadeOut' }, toast);
-            },
-          ],
-        ],
       });
     } else {
       startButton.removeAttribute('disabled');
@@ -98,36 +63,24 @@ document.addEventListener('DOMContentLoaded', function () {
 startButton.addEventListener('click', dataTimer);
 
 function dataTimer() {
-  if (isRunning) {
-    console.log('🚀 ~ dataTimer ~ isRunning:', isRunning);
-    resetTimer();
-    return;
-  }
   if (!userSelectedDate) {
     return;
   }
   inputData.disabled = true;
   const currentDate = new Date();
   let differenceData = userSelectedDate - currentDate;
-  if (differenceData > 0) {
-    startButton.setAttribute('disabled', 'true');
-  } else {
-    startButton.textContent = 'Stop';
-  }
-  isRunning = true;
+  startButton.setAttribute('disabled', 'true');
 
   interval = setInterval(() => {
     const currentDate = new Date();
     newInterval = userSelectedDate - currentDate;
     if (newInterval <= 0 && differenceData > 0) {
       clearInterval(interval);
-      differenceData = 0;
       inputData.disabled = false;
       timer.querySelectorAll('.value, .label').forEach(element => {
         element.classList.remove('active');
-        isRunning = false;
       });
-      defaultDate: new Date();
+
       iziToast.show({
         title: 'Warning!',
         message: 'Час до даної події минув!',
@@ -137,9 +90,6 @@ function dataTimer() {
         backgroundColor: '#d4cec7f3',
       });
       return;
-    }
-    if (differenceData < 0) {
-      newInterval = -newInterval;
     }
     displayData();
   }, 1000);
@@ -181,21 +131,4 @@ function displayData(value) {
   hour.textContent = addLeadingZero(timeInterval.hours);
   minute.textContent = addLeadingZero(timeInterval.minutes);
   second.textContent = addLeadingZero(timeInterval.seconds);
-}
-
-function resetTimer() {
-  day.textContent = '00';
-  hour.textContent = '00';
-  minute.textContent = '00';
-  second.textContent = '00';
-  userSelectedDate = null;
-  newInterval = 0;
-  isRunning = false;
-  startButton.textContent = 'Start';
-  inputData.disabled = false;
-  clearInterval(interval);
-  startButton.setAttribute('disabled', 'true');
-  timer.querySelectorAll('.value, .label').forEach(element => {
-    element.classList.remove('active');
-  });
 }
